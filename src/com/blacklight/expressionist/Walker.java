@@ -39,8 +39,15 @@ public class Walker {
 			else
 				break;
 		}
+		
 		tok = Token.IDENT;
 		sval = source.substring(prev, next);
+
+		Token token = Token.getToken(sval);
+		if (token == Token.FALSE || token == Token.TRUE) {
+			tok = token;
+		}
+		
 	}
 
 	void getText() {

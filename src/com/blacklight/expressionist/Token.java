@@ -6,7 +6,7 @@ public enum Token {
 	MINUS("-"), STAR("*"), SLASH("/"), COMMA(","), IDENT("ident"), 
 	NUMBER("number"), EOF("eof"), DOUBLE_QUOTE("\""),
 	AND("&&"), OR("||"), NOT_EQUALS("!="), EQUALS("=="),
-	LE("<="), GE(">="), LT("<"), GT(">");
+	LE("<="), GE(">="), LT("<"), GT(">"), TRUE("true"), FALSE("false");
 	
 	final String expressionString;
 

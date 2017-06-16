@@ -1,5 +1,6 @@
 package com.blacklight.expressionist;
 
+import com.blacklight.expressionist.exp.BooleanValueExpression;
 import com.blacklight.expressionist.exp.ComplexExpression;
 import com.blacklight.expressionist.exp.ConditionExpression;
 import com.blacklight.expressionist.exp.Expression;
@@ -100,6 +101,11 @@ public class Compiler {
 			match(Token.NUMBER);
 			return c;
 		} 
+		if (tok == Token.FALSE || tok == Token.TRUE) {
+			Expression c = new BooleanValueExpression(Boolean.valueOf(lex.sval));
+			match(tok);
+			return c;
+		} 
 		if (tok == Token.LEFT) {
 			match(Token.LEFT);
 			Expression e = cond();
@@ -159,7 +165,7 @@ public class Compiler {
 	 */
 	public static void main(String[] args) {
 		
-		String sample0 = "-1==-1 && (2>-1 || 3*5<14)";
+		String sample0 = "(-1==-1)==true && false==true && (2>-1 || 3*5<14)";
 		String sample1 = "(2*8)/2-(5-6+1)";
 //		final static String sample = "-20/((3+5)*2)/(7--22)";
 //		String sample2 = "\"hgfhgfhfh\"+\"asdas\" + fx() + fx()";
