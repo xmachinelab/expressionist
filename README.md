@@ -38,5 +38,14 @@ Basic expression compiling and running including
                 e2 => "test" // string
                 e3 => e1 + e2 // gives result "5.0test"
     
+6. Condition Expression
+
+    Example 1: 15 == 13  // EQUALS and NOT_EQUALS : == and !=
+    Example 2: 15 > 13  // GT and LT operations : > and <
+    Example 3: 15 >= 13 // GE and LE operations : >= and <=
+    Example 4: v1 == v2 && 15 > 3 // AND and OR operations : && and ||
+    
+    <b>P.S. Paranthesis are also supported for all operations. </b> 
+    
     
 </pre>
