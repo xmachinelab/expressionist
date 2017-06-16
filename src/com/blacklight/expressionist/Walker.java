@@ -73,8 +73,17 @@ public class Walker {
 			getIdent();
 		else if (Character.isDigit(c))
 			getNumber();
-		else
-			tok = Token.valueOf(c); // tok = c;
+		else {
+			if (next < source.length()) {
+				String oper = c+""+ source.charAt(next);
+				if( Token.getToken(oper) != null) {
+					tok = Token.getToken(oper);
+					prev = next;
+					next++;
+				} else
+					tok = Token.getToken(""+c);
+			} else tok = Token.getToken(""+c);
+		} // tok = c;
 		return tok;
 	}
 

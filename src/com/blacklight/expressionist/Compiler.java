@@ -1,6 +1,7 @@
 package com.blacklight.expressionist;
 
 import com.blacklight.expressionist.exp.ComplexExpression;
+import com.blacklight.expressionist.exp.ConditionExpression;
 import com.blacklight.expressionist.exp.Expression;
 import com.blacklight.expressionist.exp.FunctionExpression;
 import com.blacklight.expressionist.exp.NumberValueExpression;
@@ -37,11 +38,34 @@ public class Compiler {
 	 */
 	public Expression parse() {
 		tok = lex.nextToken();
-		Expression e = expr();
+		Expression e = cond();
 		match(Token.EOF);
 		return e;
 	}
 
+	Expression cond() {
+		Expression e = rel();
+		Token t = tok;
+		while (t == Token.AND || t == Token.OR) {
+			match(t);
+			e = new ConditionExpression(e, t, rel());
+			t = tok;
+		}
+		return e;
+	}
+
+	Expression rel() {
+		Expression e = expr();
+		Token t = tok;
+		while (t == Token.NOT_EQUALS || t == Token.EQUALS || t== Token.LE || t== Token.GE || t== Token.LT || t==Token.GT) {
+			match(t);
+			e = new ConditionExpression(e, t, expr());
+			t = tok;
+		}
+		return e;
+	}
+
+	
 	Expression expr() {
 		Expression e = term();
 		Token t = tok;
@@ -78,7 +102,7 @@ public class Compiler {
 		} 
 		if (tok == Token.LEFT) {
 			match(Token.LEFT);
-			Expression e = expr();
+			Expression e = cond();
 			match(Token.RIGHT);
 			return e;
 		} 
@@ -115,7 +139,7 @@ public class Compiler {
 			match(Token.DOUBLE_QUOTE);
 			if (tok == Token.PLUS) {
 				match(Token.PLUS);
-				Expression s2 = expr();
+				Expression s2 = cond();
 				ComplexExpression e = new ComplexExpression(s1,Token.PLUS,s2);
 				return e;
 			}
@@ -135,10 +159,11 @@ public class Compiler {
 	 */
 	public static void main(String[] args) {
 		
+		String sample0 = "-1==-1 && (2>-1 || 3*5<14)";
 		String sample1 = "(2*8)/2-(5-6+1)";
 //		final static String sample = "-20/((3+5)*2)/(7--22)";
 //		String sample2 = "\"hgfhgfhfh\"+\"asdas\" + fx() + fx()";
-		String sample2 = "v1 + ";
+		String sample2 = "v1 + v1";
 		String sample3 = "fx() + v1";
 
 		
@@ -150,13 +175,24 @@ public class Compiler {
 		Program.exprStringMap.put(name, sample1);
 		Program.exprMap.put(name, e);
 
-		name = "fx";
-		s = sample2;
+		name = "cond";
+		s = sample0;
 		System.out.println(s);
 		
 		e = new Compiler(s).parse();
-		Program.exprStringMap.put(name, sample2);
+		Program.exprStringMap.put(name, sample0);
 		Program.exprMap.put(name, e);
+		System.out.println(e + " = " + e.bValue());
+
+
+		name = "fx";
+		s = "cond";
+		System.out.println(s);
+		
+		e = new Compiler(s).parse();
+		Program.exprStringMap.put(name, s);
+		Program.exprMap.put(name, e);
+		System.out.println(e + " = " + e.bValue());
 
 		
 		name = "fxs";

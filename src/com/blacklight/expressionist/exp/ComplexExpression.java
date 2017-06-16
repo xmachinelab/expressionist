@@ -17,6 +17,7 @@ public class ComplexExpression implements Expression {
 		right = re;
 	}
 
+	public boolean bValue() {return false;}
 	public float fValue() {
 		if (oper == Token.PLUS)
 			return left.fValue() + right.fValue();

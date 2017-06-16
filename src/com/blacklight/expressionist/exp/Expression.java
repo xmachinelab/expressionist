@@ -6,6 +6,9 @@ public interface Expression {
 
 	/** Returns String value of this Expression */
 	String sValue();
+	
+	/** Returns boolean value of this Expression */
+	boolean bValue();
 
 	/** String representation of this Expression */
 	String toString();

@@ -11,6 +11,8 @@ public class FunctionExpression implements Expression  {
       name = fn; 
       this.expString = e;
    }
+	
+	public boolean bValue() {return getExpression().bValue();}
    
 	public float fValue() {
       try{

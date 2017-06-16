@@ -7,6 +7,8 @@ public class StringValueExpression implements Expression  {
    
    public StringValueExpression(String nval) { val = nval; }
    
+   public boolean bValue() {return false;}
+   
    public float fValue() { return Float.NaN; }
 
    public String sValue() { return "" + val + ""; }

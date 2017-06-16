@@ -7,6 +7,8 @@ public class NumberValueExpression implements Expression  {
    
    public NumberValueExpression(float n) { num = n; }
    
+   public boolean bValue() {return false;}
+
    public float fValue() { return num; }
 
    public String sValue() { return "" + num + ""; }
